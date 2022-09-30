@@ -28,12 +28,12 @@ def calculator():
             print('Invalid Expression: ' + expression)
             exit()
 
+
     # creating an empty list to hold the user values
     # for loop to iterate through the list of the expression the user typed, then appending them to that expression
     new_list = []
     for expression in calc:
         new_list.append(expression)
-
     # creating a variable and giving it a value of 0- to be used basically to compare values in a list
 
     n = 0
@@ -73,29 +73,29 @@ def operation(num1, operator, num2):
     elif operator == "*":
         return str(int(num1) * int(num2))
 
-    computation = calculator()
+computation = calculator()
 
-    # check if is 1 or not
-    while len(computation) != 1:
+# check if is 1 or not
+while len(computation) != 1:
     # multiplication iteration
     # del its to clear the list to allow computation of new inputs from the user
-        n = 0
-        while n < len(computation) - 1:
-            if computation[n] in ['*']:
-                computation[n - 1] = operation(
-                    computation[n - 1], computation[n], computation[n + 1])
-                del computation[n + 1]
-                del computation[n]
-            n += 1
-        # addition and subtraction iterations
-        n = 0
-        while n < len(computation) - 1:
-            if computation[n] in ["+", "-"]:
-                computation[n - 1] = operation(
-                    computation[n - 1], computation[n], computation[n + 1])
-                del computation[n + 1]
-                del computation[n]
-            n += 1
 
-    print('Result: ', int(computation[0]))
+    n = 0
+    while n < len(computation) - 1:
+        if computation[n] in ['*']:
+            computation[n - 1] = operation(
+                computation[n - 1], computation[n], computation[n + 1])
+            del computation[n + 1]
+            del computation[n]
+        n += 1
+    # addition and subtraction iterations
+    n = 0
+    while n < len(computation) - 1:
+        if computation[n] in ["+", "-"]:
+            computation[n - 1] = operation(
+                computation[n - 1], computation[n], computation[n + 1])
+            del computation[n + 1]
+            del computation[n]
+        n += 1
 
+print('Result: ', int(computation[0]))
