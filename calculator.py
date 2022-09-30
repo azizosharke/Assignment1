@@ -28,7 +28,6 @@ def calculator():
             print('Invalid Expression: ' + expression)
             exit()
 
-
     # creating an empty list to hold the user values
     # for loop to iterate through the list of the expression the user typed, then appending them to that expression
     new_list = []
@@ -72,6 +71,7 @@ def operation(num1, operator, num2):
         return str(int(num1) - int(num2))
     elif operator == "*":
         return str(int(num1) * int(num2))
+
 
 computation = calculator()
 
