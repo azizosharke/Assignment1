@@ -72,3 +72,30 @@ def operation(num1, operator, num2):
         return str(int(num1) - int(num2))
     elif operator == "*":
         return str(int(num1) * int(num2))
+
+    computation = calculator()
+
+    # check if is 1 or not
+    while len(computation) != 1:
+    # multiplication iteration
+    # del its to clear the list to allow computation of new inputs from the user
+        n = 0
+        while n < len(computation) - 1:
+            if computation[n] in ['*']:
+                computation[n - 1] = operation(
+                    computation[n - 1], computation[n], computation[n + 1])
+                del computation[n + 1]
+                del computation[n]
+            n += 1
+        # addition and subtraction iterations
+        n = 0
+        while n < len(computation) - 1:
+            if computation[n] in ["+", "-"]:
+                computation[n - 1] = operation(
+                    computation[n - 1], computation[n], computation[n + 1])
+                del computation[n + 1]
+                del computation[n]
+            n += 1
+
+    print('Result: ', int(computation[0]))
+
