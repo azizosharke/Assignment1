@@ -79,11 +79,15 @@ def solve_rpn(input_list):
     stack = []
     
     for token in input_list:                        # For each character in the RPN string...
-        if is_number(token):                      #   If it's a number...
+        if is_number(token):                        #   If it's a number...
             stack.append(token)                     #   | If it's a number, put it on the stack.
         else:                                       #   If it's an operator...
-            y = stack.pop()                         #   | Take the last two numbers from the stack
-            x = stack.pop()                         #   | and apply the operation to them,
+            try:                                    #   |
+                y = stack.pop()                     #   | Take the last two numbers from the stack
+                x = stack.pop()                     #   | and apply the operation to them,
+            except IndexError:                      #   | (If it doesn't work that means that
+                print("Invalid expression.")        #   |  the expression is wrong somehow)
+                exit()                              #   |
             stack.append(operation(x, token, y))    #   | then put the result on the stack.
     return stack.pop()                              # The result is the last number on the stack.
 
