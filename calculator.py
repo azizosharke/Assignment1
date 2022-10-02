@@ -41,6 +41,7 @@ def calculator(expression):
 # https://en.wikipedia.org/wiki/Shunting-yard_algorithm#Graphical_illustration
 # Not going to try to explain the algorithm using comments. Check out the above webpage!
 
+
 def convert_rpn(expression):
     exp_list = convert_exp_to_list(expression)
     output = []
