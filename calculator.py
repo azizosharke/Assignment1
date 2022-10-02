@@ -1,101 +1,129 @@
 from sys import exit
 
+precedence = {')' : 0, '(' : 0, '+' : 1, '-' : 1, '*' : 2, '/' : 2, '^' : 3 }
 
-# function to check if a number exists else an error
-# This function checks whether the values enter by the user are integers. If not,
-# it prints out a value error and if true the code the def function will execute
+# function to check if a given character is a number.
+# returns true/false.
 
 def check_if_is_number(expression):
-    try:
-        int(expression)
-        return True
-    except ValueError:
-        return False
-
-    # it’s a for loop that iterates through the list provided. It also checks if the words the user types are in that
-    # list. if the user uses something like / the division sign, it will print invalid expression.
-    # The exit () is for closing the program in case of an error.
-    # creating an empty list to hold the user values
+    return str(expression).replace('.', '').isdigit()
 
 
-def calculator():
-    calc = input("Enter your Expression Here: ")
-    # remove white spaces
-    calc = calc.replace(' ', '')
-    # check for invalid expression
-    for expression in calc:
-        if expression not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*']:
-            print('Invalid Expression: ' + expression)
+# function to check if a given character is an operator.
+# returns true/false.
+
+def is_operator(expression):
+    return expression in ['+', '-', '*', '/', '^', '(', ')']
+
+
+
+
+def calculator(expression):
+
+    exp_list = convert_exp_to_list(expression)
+    
+    # check for invalid tokens
+    for token in exp_list:
+        if (not check_if_is_number(token)) and (not is_operator(token)):
+            print('Invalid token: ' + token)
             exit()
+    
+    return solve_rpn(convert_rpn(expression)) # Convert the expression to RPN, then solve it.
 
-    # creating an empty list to hold the user values
-    # for loop to iterate through the list of the expression the user typed, then appending them to that expression
-    new_list = []
-    for expression in calc:
-        new_list.append(expression)
-    # creating a variable and giving it a value of 0- to be used basically to compare values in a list
 
-    n = 0
-    # creating a while loop to check if the appended list (new list) is in range. checks if the values provided in a
-    # list are numbers and also checks if there exist the appended values in the list combines the new list with the
-    # appended list clears the list checks if the list contains decimal points, if true it prints Bad formatting.,
-    # else it creates a new variable for the second number in the list
-    # checks if the second expression is a number and if true, it is combined with the number in the list before it.
-    # clears the list to allow it to have space for other numbers(expressions)
-    while n < len(new_list) - 1:
+# Function that converts a string containing a standard mathematical expression
+# into a list containing an expression written in Reverse Polish Notation.
+# Uses the shunting yard algorithm. https://en.wikipedia.org/wiki/Shunting-yard_algorithm
 
-        if check_if_is_number(new_list[n]) and check_if_is_number(new_list[n + 1]):
-            new_list[n] = new_list[n] + new_list[n + 1]
-            del new_list[n + 1]
-        elif check_if_is_number(new_list[n]) and new_list[n + 1] == ".":
-
-            try:
-                n = new_list[n + 2]
-            except IndexError:
-                print("Bad Formatting")
-                exit()
-            if check_if_is_number(new_list[n + 2]):
-                new_list[n] += new_list[n + 1] + new_list[n + 2]
-                del new_list[n + 2]
-                del new_list[n + 1]
-
+def convert_rpn(expression):
+    exp_list = convert_exp_to_list(expression)
+    output = []
+    stack = []
+    for token in exp_list:
+        if check_if_is_number(token):
+            output.append(token)
         else:
-            n += 1
-    return new_list
+            if token == '(':
+                stack.insert(0, token)
+            elif token == ')' and stack:
+                while stack[0] != '(' and stack:
+                    output.append(stack[0])
+                    del stack[0]
+                if (not stack) or stack[0] != '(':
+                    print("Invalid formatting of parentheses in expression.")
+                    return -1
+                del stack[0]
+            else:
+                if stack:
+                    while (stack and
+                          (token != '^' and precedence.get(token) <= precedence.get(stack[0])) or
+                          (token == '^' and precedence.get(token) < precedence.get(stack[0]))):
+                        output.append(stack[0])
+                        del stack[0]
+                stack.insert(0, token)
+    while stack:
+        output.append(stack[0])
+        del stack[0]
+    return output
+    
+
+# Function to solve RPN. Takes a list and outputs a floating point number.
+# Uncomment line 83 to get the calculator to print its progress,
+# and how it got to the result it found.
+
+def solve_rpn(input_list):
+    stack = []
+    for token in input_list:                # For each character in the RPN string...
+        if not is_operator(token):
+            stack.append(token)             # If it's a number, put it on the stack.
+        else:                               # If it's an operator "+-*/^"...
+            y = stack.pop()                 # Take the last two numbers from the stack
+            x = stack.pop()                 # and apply the operation to them,
+            stack.append(operation(x, token, y)) # then put the result on the stack.
+            #print (x, token, y, " = ", operation(x, token, y))
+    return stack.pop()                      # The result is the last number on the stack.
+
+
+# Function to convert a string expression (i.e. "2.3 + 1*4") into
+# a list containing each section of the expression (i.e. [2.3,'+',1,'*',4])
+
+def convert_exp_to_list(input_string):
+    output_list = []
+    n = 0
+    while n != len(input_string):
+        if check_if_is_number(input_string[n]):
+            temp = input_string[n]
+            while True:
+                if n+1 >= len(input_string):
+                    if (check_if_is_number(temp)):
+                        temp = float(temp)
+                    output_list.append(temp)
+                    break
+                elif check_if_is_number(input_string[n+1]) or input_string[n+1] == '.':
+                    temp += input_string[n+1]
+                    n += 1
+                    continue
+                if (check_if_is_number(temp)):
+                    temp = float(temp)
+                output_list.append(temp)
+                break
+        elif input_string[n] != ' ':
+            output_list.append(input_string[n])
+        n += 1
+    return output_list
 
 
 def operation(num1, operator, num2):
     if operator == "+":
-        return str(int(num1) + int(num2))
+        return num1 + num2
     elif operator == "-":
-        return str(int(num1) - int(num2))
+        return num1 - num2
     elif operator == "*":
-        return str(int(num1) * int(num2))
+        return num1 * num2
+    elif operator == "/":
+        return num1 / num2
+    elif operator == "^":
+        return num1 ** num2
+        
 
-
-computation = calculator()
-
-# check if is 1 or not
-while len(computation) != 1:
-    # multiplication iteration
-    # del its to clear the list to allow computation of new inputs from the user
-
-    n = 0
-    while n < len(computation) - 1:
-        if computation[n] in ['*']:
-            computation[n - 1] = operation(
-                computation[n - 1], computation[n], computation[n + 1])
-            del computation[n + 1]
-            del computation[n]
-        n += 1
-    # addition and subtraction iterations
-    n = 0
-    while n < len(computation) - 1:
-        if computation[n] in ["+", "-"]:
-            computation[n - 1] = operation(
-                computation[n - 1], computation[n], computation[n + 1])
-            del computation[n + 1]
-            del computation[n]
-        n += 1
-
-print('Result: ', int(computation[0]))
+print('Result:', calculator(input("Enter your Expression Here: ")))
