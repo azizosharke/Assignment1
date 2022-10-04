@@ -1,6 +1,9 @@
 from calculator import operation
 import unittest
 
+
+
+
 class Operations(unittest.TestCase):
     def test_add(self):
         num1 = 3
@@ -23,7 +26,6 @@ class Operations(unittest.TestCase):
         num2 = 7
         expected = 21
         self.assertEqual(operation(num1, operator, num2), expected)
-
 
     def test_subtract(self):
         num1 = 3
