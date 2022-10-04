@@ -1,7 +1,38 @@
-from calculator import operation
+from calculator import is_number, is_operator, operation
 import unittest
 
 
+class number(unittest.TestCase):
+    # test one checks if it returns true or false depending on input
+    def test_one(self):
+        testcase = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        expected = [True, False]
+        self.assertIn(is_number(testcase), expected)
+
+    def test_without_input(self):
+        testcase = " ",
+        msg = "emtpy input!"
+        expected = True
+        self.assertEqual(is_number(testcase), expected, msg)
+
+
+class Operator(unittest.TestCase):
+    def test_positive_input(self):
+        testcase = "+"
+        expected = True
+        self.assertEqual(is_operator(testcase), expected)
+
+    def test_with_int_input(self):
+        testcase = 1324,
+        msg = "please don't enter string token"
+        expected = True
+        self.assertEqual(is_number(testcase), expected, msg)
+
+    def test_with_empty_input(self):
+        testcase = " ",
+        msg = "input can't be empty"
+        expected = False
+        self.assertEqual(is_number(testcase), expected, msg)
 
 
 class Operations(unittest.TestCase):
