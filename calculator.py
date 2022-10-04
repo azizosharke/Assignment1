@@ -136,4 +136,4 @@ def operation(num1, operator, num2):
         return num1 ** num2
 
 
-#print('Result: {:.9g}'.format(calculator(input("Enter your Expression Here: "))))
+print('Result: {:.9g}'.format(calculator(input("Enter your Expression Here: "))))
