@@ -1,9 +1,13 @@
-from sys import exit
 
+def operation(num1, operator, num2):
+    if operator == "+":
+        return num1 + num2
+    elif operator == "-":
+        return num1 - num2
+    elif operator == "*":
+        return num1 * num2
+    elif operator == "/":
+        return num1 / num2
+    elif operator == "^":
+        return num1 ** num2
 
-
-
-# Function to check if a given character is an operator.
-# returns true/false.
-def is_operator(token):
-    return token in ['+', '-', '*', '/', '^', '(', ')']
