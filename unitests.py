@@ -11,9 +11,7 @@ class number(unittest.TestCase):
 
     def test_without_input(self):
         testcase = " ",
-        msg = "emtpy input!"
-        expected = True
-        self.assertEqual(is_number(testcase), expected, msg)
+        self.assertFalse(is_number(testcase))
 
 
 class Operator(unittest.TestCase):
@@ -22,17 +20,10 @@ class Operator(unittest.TestCase):
         expected = True
         self.assertEqual(is_operator(testcase), expected)
 
-    def test_with_int_input(self):
-        testcase = 1324,
-        msg = "please don't enter string token"
-        expected = True
-        self.assertEqual(is_number(testcase), expected, msg)
-
-    def test_with_empty_input(self):
-        testcase = " ",
-        msg = "input can't be empty"
+    def test_empty_input(self):
+        testcase = " "
         expected = False
-        self.assertEqual(is_number(testcase), expected, msg)
+        self.assertEqual(is_operator(testcase), expected)
 
 
 class Operations(unittest.TestCase):
@@ -79,4 +70,6 @@ class Operations(unittest.TestCase):
         expected = 49
         self.assertEqual(operation(num1, operator, num2), expected)
 
-unittest.main()
+
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
