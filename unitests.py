@@ -79,5 +79,4 @@ class Operations(unittest.TestCase):
         expected = 49
         self.assertEqual(operation(num1, operator, num2), expected)
 
-
 unittest.main()
