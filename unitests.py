@@ -2,7 +2,7 @@ from functions import *
 import unittest
 
 
-class convert_rpn_test(unittest.TestCase):
+class convert(unittest.TestCase):
     # tests a bunch of expression inputs to see if it correctly outputs an RPN list.
     def test_convert_rpn(self):
         test_dict = { "1 + 1"         : [1,1,'+'],
@@ -14,8 +14,8 @@ class convert_rpn_test(unittest.TestCase):
         for expression in test_dict:
             self.assertEqual(convert_rpn(expression), test_dict[expression])
             
-class solve_rpn_test(unittest.TestCase):
-    # tests a bunch of expression tuple inputs to see if it correctly outputs a number.
+class solve(unittest.TestCase):
+    # tests a bunch of tuple inputs in RPN form to see if it correctly outputs a number.
     def test_solve_rpn(self):
         test_dict = { (1,1,'+')                : 2,
                       (3,4,5,'*','+')          : 23,
@@ -25,6 +25,18 @@ class solve_rpn_test(unittest.TestCase):
                     }
         for tuple in test_dict:
             self.assertEqual(solve_rpn(list(tuple)), test_dict[tuple])
+            
+class calc(unittest.TestCase):
+    # tests a bunch of expression inputs to see if it correctly outputs a number.
+    def test_calculator(self):
+        test_dict = { "1 + 1"         : 2,
+                      "3 + 4 * 5"     : 23,
+                      "(3+4)*(5 - 2)" : 21,
+                      "(1+2.5)^(6/3)" : 12.25,
+                      "1+102/17+4"    : 11
+                    }
+        for expression in test_dict:
+            self.assertEqual(calculator(expression), test_dict[expression])
 
 class number(unittest.TestCase):
     # test one checks if it returns true or false depending on input
