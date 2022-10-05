@@ -131,6 +131,10 @@ def operation(num1, operator, num2):
     elif operator == "*":
         return num1 * num2
     elif operator == "/":
-        return num1 / num2
+        try:
+            return num1 / num2
+        except ZeroDivisionError:
+            print("Try using limits next time you sussy baka\nDIVISION BY 0 ERROR.")
+            exit()  
     elif operator == "^":
         return num1 ** num2
