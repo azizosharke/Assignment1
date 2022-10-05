@@ -1,4 +1,4 @@
-from calculator import is_number, is_operator, operation
+from functions import *
 import unittest
 
 
