@@ -87,7 +87,7 @@ def solve_rpn(input_list):
                 y = stack.pop()  # | Take the last two numbers from the stack
                 x = stack.pop()  # | and apply the operation to them,
             except IndexError:  # | (If it doesn't work that means that
-                print("Invalid expression.")  # |  the expression is wrong somehow)
+                print("Invalid expression.")  # |  the expression is wrong somehow
                 exit()  # |
             stack.append(operation(x, token, y))  # | then put the result on the stack.
     return stack.pop()  # The result is the last number on the stack.
@@ -109,13 +109,13 @@ def convert_exp_to_list(input_string):
                     break  # |
                 elif (is_number(input_string[n + 1]) or  # |
                       (input_string[
-                           n + 1] == '.')):  # | If the next char after this number is a number, or if it's a dec point...
+                           n + 1] == '.')):  # | If the next char after this number is a number, or if it's a dec point.
                     temp += input_string[
                         n + 1]  # | | Combine it with any numbers or decimal points that came before it.
                     n += 1  # | | Go back to the top of the loop.
                     continue  # |
                 temp = float(temp)  # | If the char after this number isn't a number...
-                output_list.append(temp)  # | Add all of the numbers we've put together to the list.
+                output_list.append(temp)  # | Add all the numbers we've put together to the list.
                 break  # |
         elif input_string[n] != ' ':  # Otherwise, if it's not a number...
             output_list.append(input_string[n])  # | Add it to the list. Ignore whitespace.
@@ -135,6 +135,6 @@ def operation(num1, operator, num2):
             return num1 / num2
         except ZeroDivisionError:
             print("Try using limits next time you sussy baka\nDIVISION BY 0 ERROR.")
-            exit()  
+            exit()
     elif operator == "^":
         return num1 ** num2
