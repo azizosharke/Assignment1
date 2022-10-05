@@ -62,8 +62,6 @@ def convert_rpn(expression):
                 del stack[0]
             else:
                 if stack:
-                    if precedence.get(token) == None:
-                        print(token)
                     while (stack and
                            (token != '^' and precedence.get(token) <= precedence.get(stack[0])) or
                            (token == '^' and precedence.get(token) < precedence.get(stack[0]))):
