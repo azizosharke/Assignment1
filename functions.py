@@ -79,18 +79,18 @@ def convert_rpn(expression):
 def solve_rpn(input_list):
     stack = []
 
-    for token in input_list:  # For each character in the RPN string...
-        if is_number(token):  # If it's a number...
-            stack.append(token)  # | If it's a number, put it on the stack.
-        else:  # If it's an operator...
-            try:  # |
-                y = stack.pop()  # | Take the last two numbers from the stack
-                x = stack.pop()  # | and apply the operation to them,
-            except IndexError:  # | (If it doesn't work that means that
-                print("Invalid expression.")  # |  the expression is wrong somehow
-                exit()  # |
-            stack.append(operation(x, token, y))  # | then put the result on the stack.
-    return stack.pop()  # The result is the last number on the stack.
+    for token in input_list:                     # For each character in the RPN string...
+        if is_number(token):                     # If it's a number...
+            stack.append(token)                  # | If it's a number, put it on the stack.
+        else:                                    # If it's an operator...
+            try:                                 # |
+                y = stack.pop()                  # | Take the last two numbers from the stack
+                x = stack.pop()                  # | and apply the operation to them,
+            except IndexError:                   # | (If it doesn't work that means that
+                print("Invalid expression.")     # |  the expression is wrong somehow
+                exit()                           # |
+            stack.append(operation(x, token, y)) # | then put the result on the stack.
+    return stack.pop()                           # The result is the last number on the stack.
 
 
 # Function to convert a string expression (i.e. "2.3 + 1*4") into
@@ -99,26 +99,25 @@ def solve_rpn(input_list):
 def convert_exp_to_list(input_string):
     output_list = []
     n = 0
-    while n != len(input_string):  # For each character in the string...
-        if is_number(input_string[n]):  # If it's a number...
-            temp = input_string[n]  # |
-            while True:  # |
+    while n != len(input_string):               # For each character in the string...
+        if is_number(input_string[n]):          # If it's a number...
+            temp = input_string[n]              # |
+            while True:                         # |
                 if n + 1 >= len(input_string):  # | And it's the last number...
-                    temp = float(temp)  # | | Convert it to a float.
-                    output_list.append(temp)  # | | Append the number to the list.
-                    break  # |
-                elif (is_number(input_string[n + 1]) or  # |
-                      (input_string[
-                           n + 1] == '.')):  # | If the next char after this number is a number, or if it's a dec point.
-                    temp += input_string[
-                        n + 1]  # | | Combine it with any numbers or decimal points that came before it.
-                    n += 1  # | | Go back to the top of the loop.
-                    continue  # |
-                temp = float(temp)  # | If the char after this number isn't a number...
-                output_list.append(temp)  # | Add all the numbers we've put together to the list.
-                break  # |
-        elif input_string[n] != ' ':  # Otherwise, if it's not a number...
-            output_list.append(input_string[n])  # | Add it to the list. Ignore whitespace.
+                    temp = float(temp)          # | | Convert it to a float.
+                    output_list.append(temp)    # | | Append the number to the list.
+                    break                       # |
+                elif (is_number(input_string[n + 1]) or
+                     (input_string[             # |
+                           n + 1] == '.')):     # | If the next char after this number is a number, or if it's a dec point...
+                    temp += input_string[n + 1] # | | Combine it with any numbers or decimal points that came before it.
+                    n += 1                      # | | Go back to the top of the loop.
+                    continue                    # |
+                temp = float(temp)              # | If the char after this number isn't a number...
+                output_list.append(temp)        # | Add all of the numbers we've put together to the list.
+                break                           # |
+        elif input_string[n] != ' ':            # Otherwise, if it's not a number...
+            output_list.append(input_string[n]) # | Add it to the list. Ignore whitespace.
         n += 1
     return output_list
 

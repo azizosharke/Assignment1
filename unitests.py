@@ -2,7 +2,7 @@ from functions import *
 import unittest
 
 
-class convert(unittest.TestCase):
+class convert_rpn_test(unittest.TestCase):
     # tests a bunch of expression inputs to see if it correctly outputs an RPN list.
     def test_convert_rpn(self):
         test_dict = { "1 + 1"         : [1,1,'+'],
@@ -37,6 +37,18 @@ class calc(unittest.TestCase):
                     }
         for expression in test_dict:
             self.assertEqual(calculator(expression), test_dict[expression])
+            
+class convert_exp_test(unittest.TestCase):
+    # tests a bunch of expression inputs to see if it correctly outputs an RPN list.
+    def test_convert_exp_to_list(self):
+        test_dict = { "1 + 1"         : [1,'+',1],
+                      "3 + 4 * 5"     : [3,'+',4,'*',5],
+                      "(3+4)*(5 - 2)" : ['(',3,'+',4,')','*','(',5,'-',2,')'],
+                      "(1+2.5)^(6/3)" : ['(',1,'+',2.5,')','^','(',6,'/',3,')'],
+                      "1+102/17+4"    : [1,'+',102,'/',17,'+',4]
+                    }
+        for expression in test_dict:
+            self.assertEqual(convert_exp_to_list(expression), test_dict[expression])
 
 class number(unittest.TestCase):
     # test one checks if it returns true or false depending on input
