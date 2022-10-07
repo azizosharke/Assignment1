@@ -39,7 +39,7 @@ class calc(unittest.TestCase):
             self.assertEqual(calculator(expression), test_dict[expression])
             
 class convert_exp_test(unittest.TestCase):
-    # tests a bunch of expression inputs to see if it correctly outputs an RPN list.
+    # tests a bunch of expression inputs to see if it correctly outputs an expression list.
     def test_convert_exp_to_list(self):
         test_dict = { "1 + 1"         : [1,'+',1],
                       "3 + 4 * 5"     : [3,'+',4,'*',5],
