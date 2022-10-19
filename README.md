@@ -1,4 +1,5 @@
 # calculatorSWE
+# Assignment 1 for CSU33012 SOFTWARE ENGINEERING - pairs project 
 
    In this assignment, you need to be working in pairs with your assigned member to develop a simple calculator app using Git and GitHub. 
    The app will be developed using a language of your choice. 
